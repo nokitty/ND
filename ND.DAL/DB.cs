@@ -25,35 +25,6 @@ namespace ND.DAL
         }
         #endregion
 
-        #region 增删改
-        public void Add<T>(T entity, bool save = true) where T : class
-        {
-            this.Set<T>().Add(entity);
-            if (save)
-            {
-                this.SaveChanges();
-            }
-        }
-
-        public void Remove<T>(T entity, bool save = true) where T : class
-        {
-            this.Set<T>().Remove(entity);
-            if (save)
-            {
-                this.SaveChanges();
-            }
-        }
-
-        public void Update<T>(T entity, bool save = true) where T : class
-        {
-            this.Entry<T>(entity).State = EntityState.Modified;
-            if (save)
-            {
-                this.SaveChanges();
-            }
-        }
-        #endregion
-
         #region 事务处理
         public void Transaction(Action action)
         {
@@ -65,6 +36,5 @@ namespace ND.DAL
             }
         }
         #endregion
-
-    }
+    }    
 }

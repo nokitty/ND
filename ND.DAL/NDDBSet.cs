@@ -15,19 +15,36 @@ namespace ND.DAL
             DB = db;
         }
 
-        virtual public void Add(T entity, bool save = true)
+        virtual public void AddEx(T entity, bool save = true)
         {
-            DB.Add(entity, save);
+            DB.Set<T>().Add(entity);
+            if (save)
+            {
+                DB.SaveChanges();
+            }
         }
 
-        virtual public void Remove(T entity, bool save = true)
+        virtual public void RemoveEx(T entity, bool save = true)
         {
-            DB.Remove(entity);
+            DB.Set<T>().Remove(entity);
+            if (save)
+            {
+                DB.SaveChanges();
+            }
         }
 
-        virtual public void Update(T entity, bool save = true)
+        public void Update(T entity, bool save = true)
         {
-            DB.Remove(entity);
+            DB.Entry(entity).State = EntityState.Modified;
+            if (save)
+            {
+                DB.SaveChanges();
+            }
+        }
+
+        virtual public void UpdateEx(T entity, bool save = true)
+        {
+            Update(entity, save);
         }
     }
 }
